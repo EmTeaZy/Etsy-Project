@@ -142,15 +142,17 @@ function ItemDetails({}) {
         <h1>USD {product?.price}</h1>
         <p>{product?.sales} Sales</p>
         <p>Quantity</p>
+        {stockArray.length === 0 ? <> <h3 style={{color: 'red'}}> Out of stock. </h3> <br/> </> : ''}
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={qant}
+          disabled={stockArray === 0}
           label="Quantity"
           onChange={handleQantChange}
         >
           {stockArray.map((item, index) => {
-            return <MenuItem value={index + 1}>{index + 1}</MenuItem>;
+            return <MenuItem key={index+1} value={index + 1}>{index + 1}</MenuItem>;
           })}
         </Select>
 

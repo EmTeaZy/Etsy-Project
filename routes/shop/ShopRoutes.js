@@ -24,6 +24,70 @@ router.post("/checkShopName", async (req, res) => {
   }
 });
 
+
+// route to update a shop
+router.post(
+  "/update",
+  isLogin,
+  multer({ storage: multer.memoryStorage() }).single("img"),
+  async (req, res) => {
+    if (req.file) {      
+      const extension = req.file.mimetype.split("/")[1];
+      const fileName = `${uuid.v4()}.${extension}`;
+      const filePath = `public/shopImages/${fileName}`;
+      const fileStream = fs.createWriteStream(filePath);
+      fileStream.write(req.file.buffer);
+      fileStream.end();
+      req.body.img = fileName;
+
+      console.log("Image recieved; Filename: ", fileName)
+
+      // update the shop
+      ShopSchema.findByIdAndUpdate(
+        req.body._id,
+        {
+          name: req.body.name,
+          avatar: fileName,
+        },
+        (err) => {
+          if (err) {
+            return res.json({
+              isSuccess: false,
+              message: "Something went wrong",
+            });
+          }
+          return res.json({
+            isSuccess: true,
+            message: "Shop updated successfully",
+          });
+        }
+      );
+    } else {
+      console.log(req.body);
+      // update the shop
+      ShopSchema.findByIdAndUpdate(
+        req.body._id,
+        {
+          name: req.body.name,
+          avatar: req.body.img,
+        },
+        (err) => {
+          if (err) {
+            return res.json({
+              isSuccess: false,
+              message: "Something went wrong",
+            });
+          }
+          return res.json({
+            isSuccess: true,
+            message: "Shop updated successfully",
+          });
+        }
+      );
+    }
+  }
+);
+
 // create a new shop with name, avatar data coming from the client as multipart/form-data
 router.post(
   "/create",

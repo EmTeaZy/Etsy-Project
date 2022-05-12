@@ -8,6 +8,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import EditItemFormPopup from "../components/EditItemFormPopup";
+import EditShopFormPopup from "../components/EditShopFormPopup";
 
 function Shop() {
   const { id } = useParams();
@@ -34,19 +35,25 @@ function Shop() {
       }
     });
   }, []);
-  const [isShwoingAddItemPopup, setIsShwoingAddItemPopup] = useState(false);
-  const [isShwoingEditItemPopup, setIsShwoingEditItemPopup] = useState(false);
+  const [showAddItemModal, setShowAddItemModal] = useState(false);
+  const [showEditItemModal, setShowEditItemModal] = useState(false);
+  const [showEditShopModal, setShowEditShopModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
   return (
     <div id="shop">
       <ItemFormPopup
-        isOpen={isShwoingAddItemPopup}
-        setOpen={setIsShwoingAddItemPopup}
+        isOpen={showAddItemModal}
+        setOpen={setShowAddItemModal}
       />
       <EditItemFormPopup
-        isOpen={isShwoingEditItemPopup}
-        setOpen={setIsShwoingEditItemPopup}
+        isOpen={showEditItemModal}
+        setOpen={setShowEditItemModal}
         item={selectedItem}
+      />
+      <EditShopFormPopup
+        isOpen={showEditShopModal}
+        setOpen={setShowEditShopModal}
+        shop={shop}
       />
       <div className="shop-info">
         <img src={`${baseUrl}/shopImages/${shop.avatar}`} alt="" srcset="" />
@@ -57,11 +64,24 @@ function Shop() {
             <Button
               variant="contained"
               size="large"
-              onClick={() => setIsShwoingAddItemPopup(true)}
+              onClick={() => setShowAddItemModal(true)}
             >
               Add New Item
             </Button>
           )}
+          {isOwner && 
+          <Button
+            variant="contained"
+            size="large"
+            id="edit-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              setShowEditShopModal(true)
+            }}
+          >
+            Edit
+          </Button>
+          }
         </div>
       </div>
 
@@ -72,7 +92,7 @@ function Shop() {
             key={item._id}
             item={item}
             showEditButton={isOwner}
-            openEditForm={setIsShwoingEditItemPopup}
+            openEditForm={setShowEditItemModal}
             setSelectedItem={setSelectedItem}
           />
         ))}
