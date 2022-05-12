@@ -147,7 +147,7 @@ function ItemDetails({}) {
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={qant}
-          disabled={stockArray === 0}
+          disabled={stockArray == 0}
           label="Quantity"
           onChange={handleQantChange}
         >
