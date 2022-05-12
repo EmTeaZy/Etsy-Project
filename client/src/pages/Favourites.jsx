@@ -24,7 +24,8 @@ const Search = styled("div")(({theme}) => ({
         marginLeft: theme.spacing(3),
         width: "auto",
     },
-}))
+}));
+
 const SearchIconWrapper = styled("div")(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: "100%",
