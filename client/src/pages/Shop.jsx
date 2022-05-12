@@ -61,27 +61,27 @@ function Shop() {
           <h1>{shop.name}</h1>
           <p> {shop.sales} sales </p>
           {isOwner && (
+            <>
             <Button
               variant="contained"
               size="large"
               onClick={() => setShowAddItemModal(true)}
             >
               Add New Item
+            </Button>              
+            <Button
+              variant="contained"
+              size="large"
+              id="edit-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                setShowEditShopModal(true)
+              }}
+            >
+              Edit
             </Button>
+            </>
           )}
-          {isOwner && 
-          <Button
-            variant="contained"
-            size="large"
-            id="edit-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              setShowEditShopModal(true)
-            }}
-          >
-            Edit
-          </Button>
-          }
         </div>
       </div>
 
