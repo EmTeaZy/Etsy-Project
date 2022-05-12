@@ -10,11 +10,11 @@ function Search() {
 
   useEffect(() => {
     setIsLoading(true);
-    const serachQuery = window.location.search.split("=")[1];
+    const searchQuery = window.location.search.split("=")[1];
 
     axios({
       method: "get",
-      url: baseUrl + "/product/search?search=" + serachQuery,
+      url: baseUrl + "/product/search?search=" + searchQuery,
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",
